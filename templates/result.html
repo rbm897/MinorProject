@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+body
+{  
+background-image: url("http://fs5.directupload.net/images/170422/vuokhth6.jpg");
+background-size: 1366px 768px;
+background-repeat: repeat;
+}
+h2
+{
+color:Dodgerblue;
+position: absolute;
+
+}
+</style>
+<meta charset="utf-8" />   <title>REVIEWTTER </title>      <!-- import plugin script -->   <script src='static/Chart.min.js'></script>   
+
+</head><body>
+<h1>Sentiment Statistics for " {{keyword}} " :- </h1><!-- bar chart canvas element -->
+{% if ganda %}
+<canvas id="chart" width="700" height="500"></canvas>
+{% else %}
+<h2>{{values}}</h2>
+{% endif %}
+<script>
+
+   // bar chart data
+   var barData = {
+   labels : [{% for item in labels %}
+                  "{{item}}",
+              {% endfor %}],
+   datasets : [
+      {
+            fillColor: "Dodgerblue",
+            strokeColor: "white",
+            pointColor: "black",
+         data : [{% for item in values %}
+                      {{item}},
+                    {% endfor %}]
+      }
+      ]
+   }
+ 
+   // get bar chart canvas
+   var mychart = document.getElementById("chart").getContext("2d");
+ 
+   steps = 10
+   max = 100
+   // draw bar chart
+   new Chart(mychart).Bar(barData, {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true
+   });
+ 
+</script>
+</body></html>
